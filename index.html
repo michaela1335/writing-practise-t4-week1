@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NZ Curriculum Phase 3: The Whispering Lighthouse of Cape Storm</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        capeNavy: '#0f172a',
+                        capeBlue: '#1e3a8a',
+                        capeTeal: '#0284c7',
+                        violetFlame: '#7c3aed',
+                        violetGlow: '#a855f7'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.6); }
+        }
+        .glow-effect { animation: glowPulse 3s infinite ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Navbar -->
+    <header class="bg-slate-950 text-white border-b border-slate-800 sticky top-0 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-violet-950/80 p-2.5 rounded-xl border border-violet-500/30 text-violet-400">
+                    <i class="fa-solid fa-tower-observation text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight leading-tight flex items-center gap-2">
+                        Phase 3 Narrative Writing Assessment
+                        <span class="text-[11px] bg-violet-900/80 text-violet-200 border border-violet-500/40 font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Years 7 & 8</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">NZ Curriculum Formative & Summative Evaluation Engine</p>
+                </div>
+            </div>
+            
+            <button onclick="openTeacherModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-1.5 rounded-xl border border-slate-700 text-xs font-semibold flex items-center gap-2 transition">
+                <i class="fa-solid fa-lock text-amber-400"></i>
+                <span class="hidden sm:inline">Teacher Access (PIN 1335)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full space-y-6">
+
+        <!-- Student Details Banner -->
+        <div class="bg-slate-800/90 rounded-2xl border border-slate-700/80 p-5 shadow-xl backdrop-blur-md text-white">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                <div class="md:col-span-6">
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                        <i class="fa-solid fa-user-pen text-violet-400 mr-1.5"></i> Student Name
+                    </label>
+                    <input type="text" id="studentName" placeholder="Type your full name here..." 
+                        class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-600 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 text-white placeholder-slate-500 text-sm font-medium transition">
+                </div>
+                
+                <div class="md:col-span-6">
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                        <i class="fa-solid fa-graduation-cap text-violet-400 mr-1.5"></i> Select Year Group
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="btnYear7" onclick="setYearGroup('Year 7')" 
+                                class="py-2.5 px-4 rounded-xl font-bold text-sm border-2 transition flex items-center justify-center gap-2 bg-violet-600 border-violet-400 text-white shadow-lg">
+                            <i id="iconYear7" class="fa-solid fa-circle-check"></i> Year 7
+                        </button>
+                        <button type="button" id="btnYear8" onclick="setYearGroup('Year 8')" 
+                                class="py-2.5 px-4 rounded-xl font-bold text-sm border transition flex items-center justify-center gap-2 bg-slate-900 border-slate-700 text-slate-400 hover:text-white">
+                            <i id="iconYear8" class="fa-regular fa-circle"></i> Year 8
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stimulus & Writing Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Column: Stimulus & Criteria -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Stimulus Card -->
+                <div class="bg-slate-800/90 rounded-2xl border border-slate-700 overflow-hidden shadow-xl text-white">
+                    <div class="relative group">
+                        <img id="stimulusImg" 
+                             src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" 
+                             alt="The Whispering Lighthouse of Cape Storm" 
+                             class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105"
+                             onerror="this.src='https://placehold.co/800x500/0f172a/ffffff?text=Cape+Storm+Lighthouse'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex items-end p-4">
+                            <span class="text-xs bg-violet-600/90 text-white font-semibold px-3 py-1 rounded-lg backdrop-blur-md border border-violet-400/30">
+                                <i class="fa-solid fa-bolt mr-1"></i> Visual Stimulus
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-5 space-y-3">
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-compass text-violet-400"></i> The Whispering Lighthouse of Cape Storm
+                        </h2>
+                        
+                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl text-xs text-slate-300 leading-relaxed space-y-2">
+                            <p class="font-medium text-slate-200">
+                                <strong>Narrative Prompt:</strong>
+                            </p>
+                            <p>
+                                For decades, the old lighthouse at Cape Storm stood abandoned, its light long extinguished. But during last night's sudden eclipse, the beacon flared back to life with a strange, violet flame—and a low hum began echoing across the cliffs.
+                            </p>
+                            <p class="text-violet-300 italic">
+                                Write a narrative story describing your trek up the cliff path, stepping inside the ancient spiral staircase, and what you discover at the top of the tower when you face the origin of the light.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Criteria Checklist -->
+                <div class="bg-slate-800/90 rounded-2xl border border-slate-700 p-5 shadow-xl text-white">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center justify-between">
+                        <span><i class="fa-solid fa-list-check text-violet-400 mr-1.5"></i> Phase 3 Success Criteria</span>
+                        <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Live Checks</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        <!-- Criterion 1: Word Count -->
+                        <div id="crit-words" class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900/80 border border-slate-700 transition">
+                            <div class="mt-0.5 text-slate-500 status-icon"><i class="fa-regular fa-circle"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-200">1. Precision Word Target (300 – 400 Words)</h4>
+                                <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Control narrative pacing across full required word range.</p>
+                            </div>
+                        </div>
+
+                        <!-- Criterion 2: Paragraphing -->
+                        <div id="crit-paragraphs" class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900/80 border border-slate-700 transition">
+                            <div class="mt-0.5 text-slate-500 status-icon"><i class="fa-regular fa-circle"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-200">2. Multi-Paragraph Structure (3+ Paragraphs)</h4>
+                                <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Organise trek, entry, and tower revelation into distinct paragraphs.</p>
+                            </div>
+                        </div>
+
+                        <!-- Criterion 3: Complex Connectives -->
+                        <div id="crit-connectives" class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900/80 border border-slate-700 transition">
+                            <div class="mt-0.5 text-slate-500 status-icon"><i class="fa-regular fa-circle"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-200">3. Sentence Variety & Connectives</h4>
+                                <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Include connectives (although, despite, meanwhile, whereas, nevertheless).</p>
+                            </div>
+                        </div>
+
+                        <!-- Criterion 4: Sensory Imagery -->
+                        <div id="crit-imagery" class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900/80 border border-slate-700 transition">
+                            <div class="mt-0.5 text-slate-500 status-icon"><i class="fa-regular fa-circle"></i></div>
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-200">4. Evocative Vocabulary & Imagery</h4>
+                                <p class="text-[11px] text-slate-400 leading-tight mt-0.5">Use vivid sensory terms (violet, hum, spiraling, tempest, roaring, jagged).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Interactive Editor -->
+            <div class="lg:col-span-7 flex flex-col space-y-4">
+                
+                <div class="bg-slate-800/90 rounded-2xl border border-slate-700 p-5 shadow-xl flex-grow flex flex-col text-white">
+                    
+                    <div class="flex justify-between items-center mb-3">
+                        <label for="storyText" class="text-sm font-bold text-slate-200 flex items-center gap-2">
+                            <i class="fa-solid fa-feather text-violet-400"></i> Narrative Canvas
+                        </label>
+                        
+                        <span id="wordBadge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-slate-900 text-slate-400 border border-slate-700 transition">
+                            0 / 300 - 400 Words
+                        </span>
+                    </div>
+
+                    <textarea id="storyText" rows="16" 
+                              placeholder="The wind howled against the jagged cliffs as I began my steep climb toward Cape Storm..."
+                              oninput="updateWritingMetrics()"
+                              class="w-full p-4 rounded-xl bg-slate-950 border border-slate-700 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 text-slate-100 leading-relaxed custom-scrollbar text-sm flex-grow resize-none placeholder-slate-600 transition mb-4 font-sans"></textarea>
+
+                    <!-- Real-time Metric Counter Strip -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 bg-slate-900/90 p-3.5 rounded-xl border border-slate-700">
+                        <div class="text-center p-1">
+                            <span class="block text-[10px] font-bold uppercase text-slate-400">Total Words</span>
+                            <span id="metricWords" class="text-lg font-black text-white">0</span>
+                        </div>
+                        <div class="text-center p-1 border-l border-slate-800">
+                            <span class="block text-[10px] font-bold uppercase text-slate-400">Paragraphs</span>
+                            <span id="metricParagraphs" class="text-lg font-black text-white">0</span>
+                        </div>
+                        <div class="text-center p-1 border-l border-slate-800">
+                            <span class="block text-[10px] font-bold uppercase text-slate-400">Connectives</span>
+                            <span id="metricConnectives" class="text-lg font-black text-white">0</span>
+                        </div>
+                        <div class="text-center p-1 border-l border-slate-800">
+                            <span class="block text-[10px] font-bold uppercase text-slate-400">Sensory Words</span>
+                            <span id="metricSensory" class="text-lg font-black text-white">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center justify-between gap-3">
+                        <button type="button" onclick="clearEditor()" class="px-3.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-700 text-xs font-semibold transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Clear Story
+                        </button>
+
+                        <button type="button" id="submitBtn" onclick="submitAssessment()" 
+                                class="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-violet-500/25 transition duration-200 flex items-center gap-2 text-sm">
+                            <span>Submit Writing Task</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Status Banner -->
+                <div id="statusAlert" class="hidden rounded-xl p-4 text-xs font-medium border flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i id="statusIcon" class="fa-solid fa-circle-notch fa-spin text-sm"></i>
+                        <span id="statusMessage">Syncing submission...</span>
+                    </div>
+                    <button onclick="dismissAlert()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Student Diagnostic Feedback Results Card (Hidden until submit) -->
+        <div id="feedbackContainer" class="hidden bg-slate-800 rounded-2xl border border-violet-500/40 shadow-2xl overflow-hidden transition-all duration-300 text-white">
+            <div class="bg-gradient-to-r from-violet-950 via-slate-900 to-slate-950 p-6 border-b border-violet-500/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 bg-violet-500/20 text-violet-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-violet-400/30 mb-2">
+                        <i class="fa-solid fa-award"></i> Diagnostic Complete
+                    </div>
+                    <h2 class="text-xl font-bold text-white" id="resStudentName">Student Feedback Report</h2>
+                    <p class="text-xs text-slate-400" id="resMetaInfo">Year Level • NZ Curriculum Phase 3 Evaluation</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 text-right">
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Phase 3 Placement</span>
+                    <span id="resPhaseStatus" class="text-lg font-black text-violet-300">Phase 3 Proficient</span>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <!-- Scores Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl text-center">
+                        <span class="text-xs text-slate-400 font-semibold block mb-1">Word Count Precision</span>
+                        <span id="resWordCountScore" class="text-xl font-black text-white">342 Words</span>
+                        <span id="resWordBadge" class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 bg-emerald-950 text-emerald-300 border border-emerald-500/30">Target Met</span>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl text-center">
+                        <span class="text-xs text-slate-400 font-semibold block mb-1">Paragraph Structure</span>
+                        <span id="resParagraphScore" class="text-xl font-black text-white">4 Paragraphs</span>
+                        <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 bg-violet-950 text-violet-300 border border-violet-500/30">Well Structured</span>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl text-center">
+                        <span class="text-xs text-slate-400 font-semibold block mb-1">Complex Connectives</span>
+                        <span id="resConnectivesScore" class="text-xl font-black text-white">3 Found</span>
+                        <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 bg-sky-950 text-sky-300 border border-sky-500/30">Phase 3 Ready</span>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl text-center">
+                        <span class="text-xs text-slate-400 font-semibold block mb-1">Mastery Score</span>
+                        <span id="resOverallScore" class="text-xl font-black text-amber-400">88%</span>
+                        <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 bg-amber-950 text-amber-300 border border-amber-500/30">Summative Grade</span>
+                    </div>
+                </div>
+
+                <!-- Diagnostic Breakdown -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-emerald-950/40 border border-emerald-500/30 p-4 rounded-xl">
+                        <h4 class="text-xs font-bold text-emerald-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> Identified Strengths
+                        </h4>
+                        <ul id="resStrengthsList" class="text-xs text-slate-200 space-y-2 list-disc list-inside">
+                            <!-- Strengths -->
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-950/40 border border-amber-500/30 p-4 rounded-xl">
+                        <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb text-amber-400"></i> Next Steps for Development
+                        </h4>
+                        <ul id="resNextStepsList" class="text-xs text-slate-200 space-y-2 list-disc list-inside">
+                            <!-- Next steps -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Story Preview -->
+                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-4">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Submitted Narrative Text</h4>
+                    <div id="resStoryText" class="text-xs text-slate-200 leading-relaxed font-serif italic bg-slate-950 p-4 rounded-lg border border-slate-800 whitespace-pre-wrap max-h-60 overflow-y-auto">
+                        <!-- Full story -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- TEACHER DASHBOARD MODAL (PIN: 1335) -->
+    <div id="teacherModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        
+        <!-- Step 1: PIN Screen -->
+        <div id="teacherPinCard" class="bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-700 text-white">
+            <div class="text-center mb-5">
+                <div class="bg-violet-950 text-violet-400 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-lg border border-violet-500/30">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-lg font-bold">Teacher Security Access</h3>
+                <p class="text-xs text-slate-400 mt-1">Enter PIN code to open class results & export CSV.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <input type="password" id="pinInput" placeholder="Enter PIN..." maxlength="8"
+                           onkeyup="if(event.key==='Enter') verifyPin()"
+                           class="w-full text-center text-xl font-bold tracking-widest px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-600 text-white focus:ring-2 focus:ring-violet-500">
+                    <p id="pinError" class="text-xs text-rose-400 text-center font-medium mt-1.5 hidden">
+                        Incorrect PIN. Please try again.
+                    </p>
+                </div>
+
+                <div class="flex space-x-3">
+                    <button onclick="closeTeacherModal()" class="w-1/2 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-xl transition">
+                        Cancel
+                    </button>
+                    <button onclick="verifyPin()" class="w-1/2 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold rounded-xl transition">
+                        Unlock Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Unlocked Teacher Dashboard -->
+        <div id="teacherDashboard" class="hidden bg-slate-900 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-700 text-white">
+            <div class="bg-slate-950 p-5 flex justify-between items-center border-b border-slate-800">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-violet-950 text-violet-300 px-3 py-1 rounded-lg font-mono text-xs border border-violet-500/30 font-bold">
+                        PIN: 1335
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold flex items-center gap-2">
+                            Phase 3 Class Submissions Hub
+                            <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">Sync Active</span>
+                        </h3>
+                        <p class="text-xs text-slate-400">Connected to Google Sheet Backend URL</p>
+                    </div>
+                </div>
+                <button onclick="closeTeacherModal()" class="text-slate-400 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 overflow-y-auto custom-scrollbar space-y-5 flex-grow">
+                <!-- Summary Metrics Bar -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-slate-800/80 border border-slate-700 p-3.5 rounded-xl">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Submissions</span>
+                        <span id="dashTotal" class="text-xl font-black text-white block mt-0.5">0</span>
+                    </div>
+                    <div class="bg-slate-800/80 border border-slate-700 p-3.5 rounded-xl">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Avg Word Count</span>
+                        <span id="dashAvgWords" class="text-xl font-black text-white block mt-0.5">0</span>
+                    </div>
+                    <div class="bg-slate-800/80 border border-slate-700 p-3.5 rounded-xl">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Phase 3 Proficient+</span>
+                        <span id="dashProficientPct" class="text-xl font-black text-emerald-400 block mt-0.5">0%</span>
+                    </div>
+                    <div class="bg-slate-800/80 border border-slate-700 p-3.5 rounded-xl">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Backend Status</span>
+                        <span class="text-xs font-bold text-violet-400 block mt-1 truncate">Connected</span>
+                    </div>
+                </div>
+
+                <!-- Toolbar -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-800/60 p-3 rounded-xl border border-slate-700">
+                    <div class="text-xs text-slate-300">
+                        <i class="fa-solid fa-database text-violet-400 mr-1.5"></i> All entries automatically post directly to Google Sheets.
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="downloadCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-file-csv"></i> Download Detailed CSV
+                        </button>
+                        <button onclick="clearCachePrompt()" class="bg-slate-700 hover:bg-rose-900 hover:text-rose-200 text-slate-300 px-3 py-2 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-trash-can"></i> Clear Session Cache
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submissions Table -->
+                <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-950">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-800 border-b border-slate-700 text-slate-300 font-bold uppercase tracking-wider">
+                                    <th class="p-3">Time</th>
+                                    <th class="p-3">Student Name</th>
+                                    <th class="p-3">Year</th>
+                                    <th class="p-3">Words</th>
+                                    <th class="p-3">Phase 3 Status</th>
+                                    <th class="p-3">Score</th>
+                                    <th class="p-3 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashTableBody" class="divide-y divide-slate-800 text-slate-300">
+                                <!-- Data Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Story Modal -->
+    <div id="storyModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-2xl max-w-2xl w-full p-6 border border-slate-700 text-white space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                <h3 id="modalStudentTitle" class="text-base font-bold">Student Narrative View</h3>
+                <button onclick="closeStoryModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="modalStoryContent" class="text-xs text-slate-200 leading-relaxed font-serif bg-slate-950 p-4 rounded-xl border border-slate-800 max-h-72 overflow-y-auto whitespace-pre-wrap">
+                <!-- Content -->
+            </div>
+            <div class="text-right">
+                <button onclick="closeStoryModal()" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-xl text-xs font-bold">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Google Apps Script Web App Endpoint
+        const BACKEND_URL = "https://script.google.com/macros/s/AKfycbz1jh74bf9jjCS9tq2OmBeMvseb_6-vSgy27uDcYySIRiXOljppL6UAsXopAfQ4ZABP0g/exec";
+        const TEACHER_PIN = "1335";
+        
+        let selectedYear = "Year 7";
+        let currentSubmissions = JSON.parse(localStorage.getItem('nz_p3_lighthouse_submissions') || '[]');
+
+        // Phase 3 Keywords & Connectives
+        const COMPLEX_CONNECTIVES = ["although", "despite", "meanwhile", "whereas", "nevertheless", "however", "furthermore", "consequently", "whereas", "even though", "since", "while"];
+        const SENSORY_WORDS = ["violet", "flame", "hum", "humming", "spiral", "spiraling", "staircase", "cliff", "cliffs", "tempest", "roaring", "jagged", "thunder", "eclipse", "beacon", "abandoned", "extinguished", "echoed", "echoing", "glowing", "shadows", "ancient", "whistling", "crest", "tower"];
+
+        window.onload = function() {
+            updateWritingMetrics();
+        };
+
+        function setYearGroup(year) {
+            selectedYear = year;
+            const btn7 = document.getElementById('btnYear7');
+            const btn8 = document.getElementById('btnYear8');
+            const icon7 = document.getElementById('iconYear7');
+            const icon8 = document.getElementById('iconYear8');
+
+            if (year === 'Year 7') {
+                btn7.className = "py-2.5 px-4 rounded-xl font-bold text-sm border-2 transition flex items-center justify-center gap-2 bg-violet-600 border-violet-400 text-white shadow-lg";
+                icon7.className = "fa-solid fa-circle-check";
+                btn8.className = "py-2.5 px-4 rounded-xl font-bold text-sm border transition flex items-center justify-center gap-2 bg-slate-900 border-slate-700 text-slate-400 hover:text-white";
+                icon8.className = "fa-regular fa-circle";
+            } else {
+                btn8.className = "py-2.5 px-4 rounded-xl font-bold text-sm border-2 transition flex items-center justify-center gap-2 bg-violet-600 border-violet-400 text-white shadow-lg";
+                icon8.className = "fa-solid fa-circle-check";
+                btn7.className = "py-2.5 px-4 rounded-xl font-bold text-sm border transition flex items-center justify-center gap-2 bg-slate-900 border-slate-700 text-slate-400 hover:text-white";
+                icon7.className = "fa-regular fa-circle";
+            }
+        }
+
+        function updateWritingMetrics() {
+            const text = document.getElementById('storyText').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length || (text.trim() ? 1 : 0);
+            
+            const lowerText = text.toLowerCase();
+            
+            // Count complex connectives
+            let connectiveCount = 0;
+            COMPLEX_CONNECTIVES.forEach(conn => {
+                const matches = lowerText.match(new RegExp('\\b' + conn + '\\b', 'g'));
+                if (matches) connectiveCount += matches.length;
+            });
+
+            // Count sensory terms
+            let sensoryCount = 0;
+            SENSORY_WORDS.forEach(term => {
+                const matches = lowerText.match(new RegExp('\\b' + term + '\\b', 'g'));
+                if (matches) sensoryCount += matches.length;
+            });
+
+            // Update UI Counters
+            document.getElementById('metricWords').innerText = words;
+            document.getElementById('metricParagraphs').innerText = paragraphs;
+            document.getElementById('metricConnectives').innerText = connectiveCount;
+            document.getElementById('metricSensory').innerText = sensoryCount;
+
+            // Word count status badge
+            const badge = document.getElementById('wordBadge');
+            badge.innerText = `${words} / 300 - 400 Words`;
+
+            if (words >= 300 && words <= 400) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-950 text-emerald-300 border border-emerald-500/50 glow-effect";
+            } else if (words >= 250 && words <= 450) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-extrabold bg-amber-950 text-amber-300 border border-amber-500/50";
+            } else {
+                badge.className = "px-3 py-1 rounded-full text-xs font-extrabold bg-slate-900 text-slate-400 border border-slate-700";
+            }
+
+            // Real-time Checklist Cards
+            updateChecklistCard('crit-words', words >= 300 && words <= 400);
+            updateChecklistCard('crit-paragraphs', paragraphs >= 3);
+            updateChecklistCard('crit-connectives', connectiveCount >= 2);
+            updateChecklistCard('crit-imagery', sensoryCount >= 4);
+        }
+
+        function updateChecklistCard(id, isMet) {
+            const el = document.getElementById(id);
+            const icon = el.querySelector('.status-icon');
+            if (isMet) {
+                el.className = "flex items-start space-x-3 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/40 transition";
+                icon.className = "mt-0.5 text-emerald-400 status-icon";
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else {
+                el.className = "flex items-start space-x-3 p-3 rounded-xl bg-slate-900/80 border border-slate-700 transition";
+                icon.className = "mt-0.5 text-slate-500 status-icon";
+                icon.innerHTML = '<i class="fa-regular fa-circle"></i>';
+            }
+        }
+
+        function clearEditor() {
+            document.getElementById('storyText').value = '';
+            updateWritingMetrics();
+        }
+
+        function evaluatePhase3Writing(text, name, year) {
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length || 1;
+            const lowerText = text.toLowerCase();
+
+            let connectiveCount = 0;
+            COMPLEX_CONNECTIVES.forEach(c => {
+                const matches = lowerText.match(new RegExp('\\b' + c + '\\b', 'g'));
+                if (matches) connectiveCount += matches.length;
+            });
+
+            let sensoryCount = 0;
+            SENSORY_WORDS.forEach(s => {
+                const matches = lowerText.match(new RegExp('\\b' + s + '\\b', 'g'));
+                if (matches) sensoryCount += matches.length;
+            });
+
+            // Scoring Engine
+            let score = 40; // Base score
+
+            // 1. Length scoring (300-400 target)
+            if (words >= 300 && words <= 400) {
+                score += 30;
+            } else if (words >= 250 && words <= 450) {
+                score += 18;
+            } else if (words >= 150) {
+                score += 10;
+            }
+
+            // 2. Paragraphing (Target >= 3)
+            if (paragraphs >= 3) {
+                score += 15;
+            } else if (paragraphs === 2) {
+                score += 8;
+            }
+
+            // 3. Connectives (Target >= 2)
+            if (connectiveCount >= 3) {
+                score += 15;
+            } else if (connectiveCount >= 1) {
+                score += 8;
+            }
+
+            // Cap score
+            score = Math.min(100, score);
+
+            // Curriculum Status
+            let phaseStatus = "Phase 3 Developing";
+            if (score >= 82 && words >= 300 && words <= 400) {
+                phaseStatus = "Phase 3 Advanced / Mastering";
+            } else if (score >= 60) {
+                phaseStatus = "Phase 3 Proficient";
+            }
+
+            // Strengths & Next Steps
+            const strengths = [];
+            const nextSteps = [];
+
+            if (words >= 300 && words <= 400) {
+                strengths.push(`Precise narrative length control! Maintained reader engagement across exactly ${words} words.`);
+            } else if (words < 300) {
+                nextSteps.push(`Expand narrative detail to reach the 300–400 word Phase 3 target. Describe the trek and spiral staircase in more depth.`);
+            } else {
+                nextSteps.push(`Edit tightly to stay within the 300–400 word requirement without cutting essential narrative climaxes.`);
+            }
+
+            if (paragraphs >= 3) {
+                strengths.push(`Effective multi-paragraph layout cleanly dividing the trek, lighthouse entry, and tower revelation.`);
+            } else {
+                nextSteps.push(`Organise your story into distinct paragraphs to mark shifts in time, setting, and action.`);
+            }
+
+            if (connectiveCount >= 1) {
+                strengths.push(`Demonstrated complex sentence construction using connectives like '${COMPLEX_CONNECTIVES.find(c => lowerText.includes(c))}'.`);
+            } else {
+                nextSteps.push(`Incorporate complex sentence connectives such as 'although', 'despite', 'meanwhile', or 'nevertheless'.`);
+            }
+
+            if (sensoryCount >= 3) {
+                strengths.push(`Evocative vocabulary choices reflecting the Cape Storm atmosphere (e.g., violet, hum, spiraling, cliff).`);
+            } else {
+                nextSteps.push(`Enhance sensory descriptions (sight, sound, tactile feel of the stone staircase) to immerse the reader.`);
+            }
+
+            const feedbackSummary = `Status: ${phaseStatus} | Words: ${words} | Paragraphs: ${paragraphs} | Connectives: ${connectiveCount} | Sensory Words: ${sensoryCount}`;
+
+            return {
+                words,
+                paragraphs,
+                connectiveCount,
+                sensoryCount,
+                score,
+                phaseStatus,
+                strengths,
+                nextSteps,
+                feedbackSummary
+            };
+        }
+
+        async function submitAssessment() {
+            const name = document.getElementById('studentName').value.trim();
+            const story = document.getElementById('storyText').value.trim();
+
+            if (!name) {
+                showAlert('Please enter your student name before submitting.', 'error');
+                document.getElementById('studentName').focus();
+                return;
+            }
+
+            if (!story || story.split(/\s+/).length < 50) {
+                showAlert('Please write a more complete narrative story before submitting.', 'error');
+                document.getElementById('storyText').focus();
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing & Syncing...`;
+
+            showAlert('Analyzing narrative against Phase 3 curriculum standards and syncing...', 'info');
+
+            const result = evaluatePhase3Writing(story, name, selectedYear);
+
+            const payload = {
+                studentName: name,
+                yearGroup: selectedYear,
+                story: story,
+                wordCount: result.words,
+                score: `${result.score}%`,
+                curriculumLevel: result.phaseStatus,
+                feedback: result.feedbackSummary
+            };
+
+            // Local cache
+            const localEntry = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString('en-NZ'),
+                ...payload,
+                phaseStatus: result.phaseStatus
+            };
+            currentSubmissions.unshift(localEntry);
+            localStorage.setItem('nz_p3_lighthouse_submissions', JSON.stringify(currentSubmissions));
+
+            // Sync with Google Apps Script Web App
+            try {
+                await fetch(BACKEND_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(payload)
+                });
+                showAlert('Submission successfully transmitted to your Google Sheet backend!', 'success');
+            } catch (err) {
+                console.error('Transmission error:', err);
+                showAlert('Saved locally in browser (Backend offline fallback active).', 'success');
+            }
+
+            displayStudentResults(name, selectedYear, story, result);
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Submit Writing Task</span> <i class="fa-solid fa-paper-plane text-xs"></i>`;
+        }
+
+        function displayStudentResults(name, year, story, result) {
+            document.getElementById('resStudentName').innerText = `${name}'s Writing Evaluation`;
+            document.getElementById('resMetaInfo').innerText = `${year} Assessment • Submitted ${new Date().toLocaleTimeString('en-NZ', {hour: '2-digit', minute:'2-digit'})}`;
+            
+            document.getElementById('resPhaseStatus').innerText = result.phaseStatus;
+            document.getElementById('resWordCountScore').innerText = `${result.words} Words`;
+            document.getElementById('resParagraphScore').innerText = `${result.paragraphs} Paragraphs`;
+            document.getElementById('resConnectivesScore').innerText = `${result.connectiveCount} Found`;
+            document.getElementById('resOverallScore').innerText = `${result.score}%`;
+
+            document.getElementById('resStrengthsList').innerHTML = result.strengths.map(s => `<li>${s}</li>`).join('');
+            document.getElementById('resNextStepsList').innerHTML = result.nextSteps.map(s => `<li>${s}</li>`).join('');
+            document.getElementById('resStoryText').innerText = story;
+
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            feedbackContainer.classList.remove('hidden');
+            feedbackContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showAlert(msg, type) {
+            const alertBox = document.getElementById('statusAlert');
+            const alertMsg = document.getElementById('statusMessage');
+            const alertIcon = document.getElementById('statusIcon');
+
+            alertBox.classList.remove('hidden', 'bg-rose-950', 'text-rose-200', 'border-rose-700', 'bg-emerald-950', 'text-emerald-200', 'border-emerald-700', 'bg-amber-950', 'text-amber-200', 'border-amber-700');
+
+            if (type === 'error') {
+                alertBox.classList.add('bg-rose-950', 'text-rose-200', 'border-rose-700');
+                alertIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400';
+            } else if (type === 'success') {
+                alertBox.classList.add('bg-emerald-950', 'text-emerald-200', 'border-emerald-700');
+                alertIcon.className = 'fa-solid fa-circle-check text-emerald-400';
+            } else {
+                alertBox.classList.add('bg-amber-950', 'text-amber-200', 'border-amber-700');
+                alertIcon.className = 'fa-solid fa-circle-notch fa-spin text-amber-400';
+            }
+
+            alertMsg.innerText = msg;
+        }
+
+        function dismissAlert() {
+            document.getElementById('statusAlert').classList.add('hidden');
+        }
+
+        function openTeacherModal() {
+            document.getElementById('teacherModal').classList.remove('hidden');
+            document.getElementById('teacherPinCard').classList.remove('hidden');
+            document.getElementById('teacherDashboard').classList.add('hidden');
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinError').classList.add('hidden');
+            document.getElementById('pinInput').focus();
+        }
+
+        function closeTeacherModal() {
+            document.getElementById('teacherModal').classList.add('hidden');
+        }
+
+        function verifyPin() {
+            const pin = document.getElementById('pinInput').value.trim();
+            if (pin === TEACHER_PIN) {
+                document.getElementById('teacherPinCard').classList.add('hidden');
+                document.getElementById('teacherDashboard').classList.remove('hidden');
+                loadDashboardData();
+            } else {
+                document.getElementById('pinError').classList.remove('hidden');
+            }
+        }
+
+        function loadDashboardData() {
+            const tableBody = document.getElementById('dashTableBody');
+            const totalEl = document.getElementById('dashTotal');
+            const avgWordsEl = document.getElementById('dashAvgWords');
+            const profPctEl = document.getElementById('dashProficientPct');
+
+            currentSubmissions = JSON.parse(localStorage.getItem('nz_p3_lighthouse_submissions') || '[]');
+            totalEl.innerText = currentSubmissions.length;
+
+            if (currentSubmissions.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500 italic">No submissions cached in this local browser session.</td></tr>`;
+                avgWordsEl.innerText = "0";
+                profPctEl.innerText = "0%";
+                return;
+            }
+
+            const totalWords = currentSubmissions.reduce((acc, curr) => acc + (parseInt(curr.wordCount) || 0), 0);
+            avgWordsEl.innerText = Math.round(totalWords / currentSubmissions.length);
+
+            const proficientCount = currentSubmissions.filter(s => s.curriculumLevel && (s.curriculumLevel.includes('Proficient') || s.curriculumLevel.includes('Advanced'))).length;
+            profPctEl.innerText = `${Math.round((proficientCount / currentSubmissions.length) * 100)}%`;
+
+            tableBody.innerHTML = currentSubmissions.map((sub, idx) => `
+                <tr class="hover:bg-slate-900/80 transition">
+                    <td class="p-3 text-slate-400 whitespace-nowrap">${sub.timestamp || 'Recent'}</td>
+                    <td class="p-3 font-bold text-white">${escapeHtml(sub.studentName)}</td>
+                    <td class="p-3"><span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-semibold text-[10px]">${sub.yearGroup}</span></td>
+                    <td class="p-3 font-medium text-slate-200">${sub.wordCount}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            sub.curriculumLevel.includes('Advanced') ? 'bg-purple-950 text-purple-300 border border-purple-500/30' :
+                            sub.curriculumLevel.includes('Proficient') ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/30' : 'bg-amber-950 text-amber-300 border border-amber-500/30'
+                        }">
+                            ${sub.curriculumLevel}
+                        </span>
+                    </td>
+                    <td class="p-3 font-bold text-slate-200">${sub.score}</td>
+                    <td class="p-3 text-right">
+                        <button onclick="viewStoryDetail(${idx})" class="text-violet-300 hover:text-white bg-violet-950/60 hover:bg-violet-900 border border-violet-500/30 px-2.5 py-1 rounded font-semibold text-[11px] transition">
+                            View Story
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function viewStoryDetail(index) {
+            const sub = currentSubmissions[index];
+            if (!sub) return;
+            document.getElementById('modalStudentTitle').innerText = `${sub.studentName} (${sub.yearGroup}) - ${sub.wordCount} Words`;
+            document.getElementById('modalStoryContent').innerText = sub.story;
+            document.getElementById('storyModal').classList.remove('hidden');
+        }
+
+        function closeStoryModal() {
+            document.getElementById('storyModal').classList.add('hidden');
+        }
+
+        function downloadCSV() {
+            if (currentSubmissions.length === 0) {
+                alert('No student submissions found to export.');
+                return;
+            }
+
+            const headers = ["Timestamp", "Student Name", "Year Group", "Story Text", "Word Count", "Score", "Phase 3 Curriculum Level", "Feedback"];
+            const rows = currentSubmissions.map(s => [
+                `"${s.timestamp || ''}"`,
+                `"${(s.studentName || '').replace(/"/g, '""')}"`,
+                `"${s.yearGroup || ''}"`,
+                `"${(s.story || '').replace(/"/g, '""')}"`,
+                `"${s.wordCount || 0}"`,
+                `"${s.score || ''}"`,
+                `"${(s.curriculumLevel || '').replace(/"/g, '""')}"`,
+                `"${(s.feedback || '').replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Cape_Storm_Writing_Assessment_Results_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function clearCachePrompt() {
+            localStorage.removeItem('nz_p3_lighthouse_submissions');
+            currentSubmissions = [];
+            loadDashboardData();
+        }
+
+        function escapeHtml(text) {
+            return text ? text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") : '';
+        }
+    </script>
+</body>
+</html>
